@@ -36,15 +36,21 @@ Este projeto foi desenvolvido durante as aulas de Python da FIAP e consiste em u
   > streamlit
   > ```
 
+
 ## Como executar o sistema
 
-1. No terminal, dentro da pasta do projeto, execute:
+1. Certifique-se de que as dependências estão instaladas (veja seção Instalação).
+2. No terminal, dentro da pasta do projeto, execute:
   ```bash
   streamlit run app.py
   ```
-  > Substitua `app.py` pelo nome do arquivo principal do seu projeto.
+3. O navegador abrirá automaticamente a interface do sistema.
 
-2. O navegador abrirá automaticamente a interface do sistema.
+---
+
+### Integrantes
+
+Adicione aqui o link do GitHub da equipe e os nomes/RMs de todos os integrantes.
 
 ## Dicas para quem nunca usou Streamlit
 
