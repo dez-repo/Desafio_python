@@ -23,7 +23,28 @@ Este projeto foi desenvolvido durante as aulas de Python da FIAP e consiste em u
 2. **Crie um ambiente virtual (opcional, mas recomendado):**
   ```bash
   python -m venv venv
+  ```
+  ```bash
   source venv/bin/activate  # Linux/Mac
+  ```
+  Antes de ativar:
+  ```bash
+  venv\Scripts\activate     # Windows
+  ```
+  Use:
+  ```bash
+  Get-ExecutionPolicy
+  ```
+  Caso voce veja no seu Terminal:
+  > Restricted
+  Execute:
+  ```bash
+  Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+  ```
+  Isso permite que os scripts sejam executados localmente.
+  
+  Depois disso poderar executar o seginte codigo sem problema
+  ```bash
   venv\Scripts\activate     # Windows
   ```
 
