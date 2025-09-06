@@ -37,6 +37,7 @@ Este projeto foi desenvolvido durante as aulas de Python da FIAP e consiste em u
   ```
   Caso voce veja no seu Terminal:
   > Restricted
+  
   Execute:
   ```bash
   Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
