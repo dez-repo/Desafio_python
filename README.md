@@ -87,3 +87,12 @@ Adicione aqui o link do GitHub da equipe e os nomes/RMs de todos os integrantes.
 
 ---
 Colabore com melhorias e sugestões!
+
+Alunos envolvidos
+
+*Alexandre Ferreira (_565626_)*
+*Carlos Bucker (_555812_)*
+*Filipe Silva (_564571_)*
+*Luca Schimdt (_560255_)*
+*Mayara Mota Araujo (_563887_)*
+
