@@ -1,5 +1,5 @@
 import streamlit as st
-from etapa1 import EstoqueManager
+from estoque import EstoqueManager
 
 st.set_page_config(page_title="Gestão de Estoque", layout="wide")
 
