@@ -1,6 +1,7 @@
 class EstoqueManager:
     def __init__(self):
         self.produtos = {}  # Dicionário: {codigo: [nome, categoria, quantidade, preco, fornecedor, descricao]}
+        self.vendas = []  # Lista para registrar vendas: [data, codigo, quantidade, valor_total, desconto]
 
     def adicionar_ao_estoque(self, codigo, quantidade):
         try:
@@ -58,6 +59,59 @@ class EstoqueManager:
             descricao = info[5][:50] + "..." if len(info[5]) > 50 else info[5]
             print(f"{codigo} | {info[0]} | {info[1]} | {info[2]} | R${info[3]:.2f} | {info[4]} | {descricao}")
 
+    def registrar_venda(self, codigo, quantidade, desconto=0):
+        try:
+            if codigo not in self.produtos:
+                raise KeyError("Produto não cadastrado.")
+            if quantidade <= 0:
+                raise ValueError("Quantidade deve ser positiva.")
+            if self.produtos[codigo][2] < quantidade:
+                raise ValueError("Estoque insuficiente.")
+            valor_unitario = self.produtos[codigo][3]
+            valor_total = quantidade * valor_unitario
+            if desconto < 0:
+                raise ValueError("Desconto não pode ser negativo.")
+            valor_com_desconto = valor_total * (1 - desconto / 100)
+            self.vendas.append([self.obter_data(), codigo, quantidade, valor_com_desconto, desconto])
+            self.produtos[codigo][2] -= quantidade
+            print(f"Venda registrada com sucesso. Valor total: R${valor_com_desconto:.2f}")
+        except (ValueError, KeyError) as e:
+            print(f"Erro: {e}")
+
+    def obter_data(self):
+        from datetime import datetime
+        return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    def relatorio_vendas(self):
+        if not self.vendas:
+            print("Nenhuma venda registrada.")
+            return
+        print("\n=== Relatório de Vendas ===")
+        print("Data | Código | Quantidade | Valor Total | Desconto (%)")
+        print("-" * 60)
+        for venda in self.vendas:
+            print(f"{venda[0]} | {venda[1]} | {venda[2]} | R${venda[3]:.2f} | {venda[4]}%")
+
+    def relatorio_estoque(self):
+        if not self.produtos:
+            print("Nenhum produto cadastrado.")
+            return
+        print("\n=== Relatório de Estoque ===")
+        print("Código | Nome | Quantidade Atual")
+        print("-" * 40)
+        for codigo, info in self.produtos.items():
+            print(f"{codigo} | {info[0]} | {info[2]}")
+
+    def historico_movimentacoes(self):
+        print("\n=== Histórico de Movimentações ===")
+        print("Data | Tipo | Código | Quantidade")
+        print("-" * 50)
+        for venda in self.vendas:
+            print(f"{venda[0]} | Venda | {venda[1]} | -{venda[2]}")
+        for codigo, info in self.produtos.items():
+            if info[2] > 0:  # Considera apenas movimentações iniciais ou adições
+                print(f"{self.obter_data()} | Adição | {codigo} | {info[2]}")
+
 def obter_texto(mensagem, obrigatorio=True, max_len=None):
     while True:
         valor = input(mensagem).strip()
@@ -88,8 +142,12 @@ def main():
         print("2. Adicionar ao estoque")
         print("3. Remover do estoque")
         print("4. Listar produtos")
-        print("5. Sair")
-        opcao = input("Escolha uma opção (1-5): ").strip()
+        print("5. Registrar venda")
+        print("6. Relatório de vendas")
+        print("7. Relatório de estoque")
+        print("8. Histórico de movimentações")
+        print("9. Sair")
+        opcao = input("Escolha uma opção (1-9): ").strip()
 
         if opcao == "1":
             codigo = obter_texto("Digite o código do produto: ")
@@ -115,6 +173,21 @@ def main():
             estoque.listar_produtos()
 
         elif opcao == "5":
+            codigo = obter_texto("Digite o código do produto: ")
+            quantidade = obter_numero("Digite a quantidade a vender: ", int, 1)
+            desconto = obter_numero("Digite o desconto (%): ", float, 0)
+            estoque.registrar_venda(codigo, quantidade, desconto)
+
+        elif opcao == "6":
+            estoque.relatorio_vendas()
+
+        elif opcao == "7":
+            estoque.relatorio_estoque()
+
+        elif opcao == "8":
+            estoque.historico_movimentacoes()
+
+        elif opcao == "9":
             print("Saindo do sistema...")
             break
         else:
